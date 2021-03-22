@@ -1,4 +1,4 @@
-﻿// <copyright file="ResponseCard.cs" company="Microsoft">
+// <copyright file="ResponseCard.cs" company="Microsoft">
 // Copyright (c) Microsoft. All rights reserved.
 // </copyright>
 
@@ -62,7 +62,7 @@ namespace Microsoft.Teams.Apps.FAQPlusPlus.Cards
                 },
                 new AdaptiveTextBlock
                 {
-                    Text = answer,
+                    Text = answer + "answer",
                     Wrap = true,
                     Spacing = AdaptiveSpacing.Medium,
                 },
