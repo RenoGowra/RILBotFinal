@@ -980,7 +980,8 @@ namespace Microsoft.Teams.Apps.FAQPlusPlus.Cards
                         Url = new Uri(answerModel?.RedirectionUrl),
                     });
             }
-      if (answerModel?.Description.Contains(Strings.TrainingVideoIdentifier))
+      //var answer = answerModel?.Description.ToString();
+      if (answer.Contains(Strings.TrainingVideoIdentifier))
       {
           responseCard.Actions.Add(
             new AdaptiveSubmitAction
@@ -995,7 +996,7 @@ namespace Microsoft.Teams.Apps.FAQPlusPlus.Cards
                 Text = "Play",
               },
               UserQuestion = userQuestion,
-              KnowledgeBaseAnswer = answerModel?.Description,
+              KnowledgeBaseAnswer = answer,
             },
           });
       }
