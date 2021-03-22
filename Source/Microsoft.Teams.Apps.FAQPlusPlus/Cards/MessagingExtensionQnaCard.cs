@@ -933,7 +933,7 @@ namespace Microsoft.Teams.Apps.FAQPlusPlus.Cards
                     new AdaptiveTextBlock
                     {
                         Weight = AdaptiveTextWeight.Bolder,
-                        Text = Strings.ResponseHeaderText + "Test",
+                        Text = Strings.ResponseHeaderText,
                         Wrap = true,
                     },
                     new AdaptiveTextBlock
@@ -980,8 +980,27 @@ namespace Microsoft.Teams.Apps.FAQPlusPlus.Cards
                         Url = new Uri(answerModel?.RedirectionUrl),
                     });
             }
+      if (answerModel?.Description.Contains(Strings.TrainingVideoIdentifier))
+      {
+          responseCard.Actions.Add(
+            new AdaptiveSubmitAction
+          {
+            Title = "Play",
+            Data = new ResponseCardPayload
+            {
+              MsTeams = new CardAction
+              {
+                Type = "task/fetch",
+                DisplayText = "Play Training Video",
+                Text = "Play",
+              },
+              UserQuestion = userQuestion,
+              KnowledgeBaseAnswer = answerModel?.Description,
+            },
+          });
+      }
 
-            responseCard.Actions.Add(
+      responseCard.Actions.Add(
                    new AdaptiveSubmitAction
                    {
                        Title = Strings.AskAnExpertButtonText,
@@ -1014,6 +1033,7 @@ namespace Microsoft.Teams.Apps.FAQPlusPlus.Cards
                            KnowledgeBaseAnswer = answerModel?.Description,
                        },
                    });
+            
 
             return new Attachment
             {
