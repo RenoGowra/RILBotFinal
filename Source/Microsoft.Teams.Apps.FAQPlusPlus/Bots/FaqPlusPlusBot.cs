@@ -304,8 +304,8 @@ namespace Microsoft.Teams.Apps.FAQPlusPlus.Bots
               Url = "https://www.youtube.com/embed/jugBQqE_2sM",
               Height = "large",
               Width = "large",
-              Title = "Reliance Training",
-              //Title = txtValue,
+              //Title = "Reliance Training",
+              Title = txtValue,
             },
           },
         });
