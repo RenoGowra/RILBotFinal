@@ -926,6 +926,7 @@ namespace Microsoft.Teams.Apps.FAQPlusPlus.Cards
         public static Attachment GetEndUserRichCard(string userQuestion, QnASearchResult queryResult)
         {
             var answerModel = JsonConvert.DeserializeObject<AnswerModel>(queryResult?.Answer);
+            bool video = ((string)answerModel?.Description).Contains(Strings.TrainingVideoIdentifier);
             AdaptiveCard responseCard = new AdaptiveCard(new AdaptiveSchemaVersion(1, 0))
             {
                 Body = new List<AdaptiveElement>
@@ -949,17 +950,18 @@ namespace Microsoft.Teams.Apps.FAQPlusPlus.Cards
                         Size = AdaptiveTextSize.Large,
                         Weight = AdaptiveTextWeight.Bolder,
                     },
-                    new AdaptiveTextBlock
-                    {
-                        Text = answerModel?.Subtitle,
-                        Size = AdaptiveTextSize.Medium,
-                    },
+                    
                     new AdaptiveImage
                     {
                         Url = !string.IsNullOrEmpty(answerModel?.ImageUrl?.Trim()) ? new Uri(answerModel?.ImageUrl?.Trim()) : default,
                         Size = AdaptiveImageSize.Auto,
                         Style = AdaptiveImageStyle.Default,
                         AltText = answerModel?.Title,
+                    },
+                    new AdaptiveTextBlock
+                    {
+                        Text = answerModel?.Subtitle,
+                        Size = AdaptiveTextSize.Large,
                     },
                     new AdaptiveTextBlock
                     {
@@ -970,6 +972,7 @@ namespace Microsoft.Teams.Apps.FAQPlusPlus.Cards
                 },
                 Actions = new List<AdaptiveAction>(),
             };
+         
 
             if (!string.IsNullOrEmpty(answerModel?.RedirectionUrl))
             {
@@ -981,7 +984,7 @@ namespace Microsoft.Teams.Apps.FAQPlusPlus.Cards
                     });
             }
       
-      if (((string) answerModel?.Description).Contains(Strings.TrainingVideoIdentifier))
+      if (video)
       {
           responseCard.Actions.Add(
             new AdaptiveSubmitAction
