@@ -981,7 +981,7 @@ namespace Microsoft.Teams.Apps.FAQPlusPlus.Cards
                     });
             }
       //var answer = answerModel?.Description.ToString();
-      if (answer.Contains(Strings.TrainingVideoIdentifier))
+      if (answer.Contains("https://microsoftapc.sharepoint.com"))
       {
           responseCard.Actions.Add(
             new AdaptiveSubmitAction
