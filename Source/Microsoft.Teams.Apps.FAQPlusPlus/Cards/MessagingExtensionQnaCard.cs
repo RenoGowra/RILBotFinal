@@ -981,7 +981,7 @@ namespace Microsoft.Teams.Apps.FAQPlusPlus.Cards
                     });
             }
       
-      if (((string) answerModel?.Description).Contains("http://microsoftapc.sharepoint.com"))
+      if (((string) answerModel?.Description).Contains(Strings.TrainingVideoIdentifier))
       {
           responseCard.Actions.Add(
             new AdaptiveSubmitAction
