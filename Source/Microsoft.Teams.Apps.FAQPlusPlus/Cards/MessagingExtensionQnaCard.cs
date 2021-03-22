@@ -980,8 +980,8 @@ namespace Microsoft.Teams.Apps.FAQPlusPlus.Cards
                         Url = new Uri(answerModel?.RedirectionUrl),
                     });
             }
-      //var answer = answerModel?.Description.ToString();
-      if (answerModel?.Description.Contains("https://microsoftapc.sharepoint.com"))
+      string answer = JsonConvert.DeserializeObject<AnswerModel>(qnaDocument.Answer)?.Description;
+      if (answer.Contains("https://microsoftapc.sharepoint.com"))
       {
           responseCard.Actions.Add(
             new AdaptiveSubmitAction
