@@ -981,7 +981,7 @@ namespace Microsoft.Teams.Apps.FAQPlusPlus.Cards
                     });
             }
       //var answer = answerModel?.Description.ToString();
-      if (answer.Contains("https://microsoftapc.sharepoint.com"))
+      if (answerModel?.Description.Contains("https://microsoftapc.sharepoint.com"))
       {
           responseCard.Actions.Add(
             new AdaptiveSubmitAction
@@ -996,7 +996,7 @@ namespace Microsoft.Teams.Apps.FAQPlusPlus.Cards
                 Text = "Play",
               },
               UserQuestion = userQuestion,
-              KnowledgeBaseAnswer = answer,
+              KnowledgeBaseAnswer = answerModel?.Description,
             },
           });
       }
