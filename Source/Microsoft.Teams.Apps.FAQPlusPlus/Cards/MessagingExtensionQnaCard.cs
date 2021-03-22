@@ -1,4 +1,4 @@
-﻿// <copyright file="MessagingExtensionQnaCard.cs" company="Microsoft">
+// <copyright file="MessagingExtensionQnaCard.cs" company="Microsoft">
 // Copyright (c) Microsoft. All rights reserved.
 // </copyright>
 
@@ -933,7 +933,7 @@ namespace Microsoft.Teams.Apps.FAQPlusPlus.Cards
                     new AdaptiveTextBlock
                     {
                         Weight = AdaptiveTextWeight.Bolder,
-                        Text = Strings.ResponseHeaderText,
+                        Text = Strings.ResponseHeaderText + "Test",
                         Wrap = true,
                     },
                     new AdaptiveTextBlock

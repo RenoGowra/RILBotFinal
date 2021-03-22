@@ -62,7 +62,7 @@ namespace Microsoft.Teams.Apps.FAQPlusPlus.Cards
                 },
                 new AdaptiveTextBlock
                 {
-                    Text = answer + "answer",
+                    Text = answer,
                     Wrap = true,
                     Spacing = AdaptiveSpacing.Medium,
                 },
