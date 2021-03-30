@@ -1,4 +1,4 @@
-﻿// <copyright file="ResponseCard.cs" company="Microsoft">
+// <copyright file="ResponseCard.cs" company="Microsoft">
 // Copyright (c) Microsoft. All rights reserved.
 // </copyright>
 

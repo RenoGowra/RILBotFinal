@@ -1,4 +1,4 @@
-﻿// <copyright file="MessagingExtensionQnaCard.cs" company="Microsoft">
+// <copyright file="MessagingExtensionQnaCard.cs" company="Microsoft">
 // Copyright (c) Microsoft. All rights reserved.
 // </copyright>
 
@@ -926,9 +926,8 @@ namespace Microsoft.Teams.Apps.FAQPlusPlus.Cards
         public static Attachment GetEndUserRichCard(string userQuestion, QnASearchResult queryResult)
         {
             var answerModel = JsonConvert.DeserializeObject<AnswerModel>(queryResult?.Answer);
-            AdaptiveCard responseCard = new AdaptiveCard(new AdaptiveSchemaVersion(1, 0))
-            {
-                Body = new List<AdaptiveElement>
+            bool video = ((string)answerModel?.Description).Contains(Strings.TrainingVideoIdentifier);
+      List<AdaptiveElement> responseBodyList = new List<AdaptiveElement>
                 {
                     new AdaptiveTextBlock
                     {
@@ -967,9 +966,60 @@ namespace Microsoft.Teams.Apps.FAQPlusPlus.Cards
                         Size = AdaptiveTextSize.Small,
                         Wrap = true,
                     },
-                },
+                };
+ 
+                if((answerModel.Description).Contains(Strings.TrainingVideoIdentifier))
+            {
+        responseBodyList = new List<AdaptiveElement>
+                        {
+                            new AdaptiveTextBlock
+                            {
+                                Weight = AdaptiveTextWeight.Bolder,
+                                Text = Strings.ResponseHeaderText,
+                                Wrap = true,
+                            },
+                            new AdaptiveTextBlock
+                            {
+                                Size = AdaptiveTextSize.Default,
+                                Wrap = true,
+                                Text = queryResult?.Questions[0],
+                            },
+                            new AdaptiveTextBlock
+                            {
+                                Wrap = true,
+                                Text = answerModel?.Title,
+                                Size = AdaptiveTextSize.Large,
+                                Weight = AdaptiveTextWeight.Bolder,
+                            },
+
+                            new AdaptiveImage
+                            {
+                                Url = !string.IsNullOrEmpty(answerModel?.ImageUrl?.Trim()) ? new Uri(answerModel?.ImageUrl?.Trim()) : default,
+                                Size = AdaptiveImageSize.Auto,
+                                Style = AdaptiveImageStyle.Default,
+                                AltText = answerModel?.Title,
+                            },
+                            new AdaptiveTextBlock
+                            {
+                                Text = answerModel?.Subtitle,
+                                Size = AdaptiveTextSize.Large,
+                            },
+                            /*new AdaptiveTextBlock
+                            {
+                                Text = answerModel?.Description,
+                                Size = AdaptiveTextSize.Small,
+                                Wrap = true,
+                            },*/
+                        };
+            }
+            AdaptiveCard responseCard = new AdaptiveCard(new AdaptiveSchemaVersion(1, 0))
+            {
+                Body = responseBodyList
+              ,
+
                 Actions = new List<AdaptiveAction>(),
             };
+         
 
             if (!string.IsNullOrEmpty(answerModel?.RedirectionUrl))
             {
@@ -980,8 +1030,28 @@ namespace Microsoft.Teams.Apps.FAQPlusPlus.Cards
                         Url = new Uri(answerModel?.RedirectionUrl),
                     });
             }
+      
+      if (video)
+      {
+          responseCard.Actions.Add(
+            new AdaptiveSubmitAction
+          {
+            Title = "Play",
+            Data = new ResponseCardPayload
+            {
+              MsTeams = new CardAction
+              {
+                Type = "task/fetch",
+                DisplayText = "Play Training Video",
+                Text = "Play",
+              },
+              UserQuestion = userQuestion,
+              KnowledgeBaseAnswer = answerModel?.Description,
+            },
+          });
+      }
 
-            responseCard.Actions.Add(
+      responseCard.Actions.Add(
                    new AdaptiveSubmitAction
                    {
                        Title = Strings.AskAnExpertButtonText,
@@ -1014,6 +1084,7 @@ namespace Microsoft.Teams.Apps.FAQPlusPlus.Cards
                            KnowledgeBaseAnswer = answerModel?.Description,
                        },
                    });
+            
 
             return new Attachment
             {

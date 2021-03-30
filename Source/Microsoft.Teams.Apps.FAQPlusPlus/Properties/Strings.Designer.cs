@@ -1060,6 +1060,15 @@ namespace Microsoft.Teams.Apps.FAQPlusPlus.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to https://microsoftapc.sharepoint.com.
+        /// </summary>
+        public static string TrainingVideoIdentifier {
+            get {
+                return ResourceManager.GetString("TrainingVideoIdentifier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unassign.
         /// </summary>
         public static string UnassignActionChoiceTitle {

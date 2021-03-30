@@ -274,34 +274,57 @@ namespace Microsoft.Teams.Apps.FAQPlusPlus.Bots
             }
         }
 
-        /// <summary>
-        /// Invoke when user clicks on edit button on a question in SME team.
-        /// </summary>
-        /// <param name="turnContext">Context object containing information cached for a single turn of conversation with a user.</param>
-        /// <param name="taskModuleRequest">Task module invoke request value payload.</param>
-        /// <param name="cancellationToken">Propagates notification that operations should be canceled.</param>
-        /// <returns>A task that represents the work queued to execute.</returns>
-        /// <remarks>
-        /// Reference link: https://docs.microsoft.com/en-us/dotnet/api/microsoft.bot.builder.teams.teamsactivityhandler.onteamstaskmodulefetchasync?view=botbuilder-dotnet-stable.
-        /// </remarks>
-        protected override Task<TaskModuleResponse> OnTeamsTaskModuleFetchAsync(
-            ITurnContext<IInvokeActivity> turnContext,
-            TaskModuleRequest taskModuleRequest,
-            CancellationToken cancellationToken)
+    /// <summary>
+    /// Invoke when user clicks on edit button on a question in SME team.
+    /// </summary>
+    /// <param name="turnContext">Context object containing information cached for a single turn of conversation with a user.</param>
+    /// <param name="taskModuleRequest">Task module invoke request value payload.</param>
+    /// <param name="cancellationToken">Propagates notification that operations should be canceled.</param>
+    /// <returns>A task that represents the work queued to execute.</returns>
+    /// <remarks>
+    /// Reference link: https://docs.microsoft.com/en-us/dotnet/api/microsoft.bot.builder.teams.teamsactivityhandler.onteamstaskmodulefetchasync?view=botbuilder-dotnet-stable.
+    /// </remarks>
+    protected override Task<TaskModuleResponse> OnTeamsTaskModuleFetchAsync(
+        ITurnContext<IInvokeActivity> turnContext,
+        TaskModuleRequest taskModuleRequest,
+        CancellationToken cancellationToken)
+    {
+      var testToCheckWhichFetch = JObject.Parse(taskModuleRequest?.Data?.ToString()).ToString();
+      if (testToCheckWhichFetch.Contains(Strings.TrainingVideoIdentifier))
+            {
+        var values = JsonConvert.DeserializeObject<TrainingAdaptiveSubmitActionData>(JObject.Parse(taskModuleRequest?.Data?.ToString()).ToString());
+        var txtValue = values.KnowledgeBaseAnswer.ToString();
+        return Task.FromResult(new TaskModuleResponse
         {
-            try
+          Task = new TaskModuleContinueResponse
+          {
+            Value = new TaskModuleTaskInfo
             {
-                var postedValues = JsonConvert.DeserializeObject<AdaptiveSubmitActionData>(JObject.Parse(taskModuleRequest?.Data?.ToString()).ToString());
-                var adaptiveCardEditor = MessagingExtensionQnaCard.AddQuestionForm(postedValues, this.appBaseUri);
-                return GetTaskModuleResponseAsync(adaptiveCardEditor, Strings.EditQuestionSubtitle);
-            }
-            catch (Exception ex)
-            {
-                this.logger.LogError(ex, "Error while fetch event is received from the user.");
-            }
-
-            return default;
+              Url = txtValue + "&action=embedview",
+              //Url = "https://www.youtube.com/embed/jugBQqE_2sM",
+              Height = "large",
+              Width = "large",
+              Title = "Reliance Training",
+              //Title = txtValue,
+            },
+          },
+        });
+      }
+        else {
+        try
+        {
+          var postedValues = JsonConvert.DeserializeObject<AdaptiveSubmitActionData>(JObject.Parse(taskModuleRequest?.Data?.ToString()).ToString());
+          var adaptiveCardEditor = MessagingExtensionQnaCard.AddQuestionForm(postedValues, this.appBaseUri);
+          return GetTaskModuleResponseAsync(adaptiveCardEditor, Strings.EditQuestionSubtitle);
         }
+        catch (Exception ex)
+        {
+          this.logger.LogError(ex, "Error while fetch event is received from the user.");
+        }
+
+        return default;
+      }
+    }
 
         /// <summary>
         /// Invoked when the user submits a edited question from SME team.
