@@ -1004,12 +1004,12 @@ namespace Microsoft.Teams.Apps.FAQPlusPlus.Cards
                                 Text = answerModel?.Subtitle,
                                 Size = AdaptiveTextSize.Large,
                             },
-                            /*new AdaptiveTextBlock
+                            new AdaptiveTextBlock
                             {
                                 Text = answerModel?.Description,
                                 Size = AdaptiveTextSize.Small,
                                 Wrap = true,
-                            },*//**/
+                            },
                         };
             }
             AdaptiveCard responseCard = new AdaptiveCard(new AdaptiveSchemaVersion(1, 0))
