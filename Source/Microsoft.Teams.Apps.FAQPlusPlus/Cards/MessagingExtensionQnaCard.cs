@@ -927,7 +927,7 @@ namespace Microsoft.Teams.Apps.FAQPlusPlus.Cards
         {
             var answerModel = JsonConvert.DeserializeObject<AnswerModel>(queryResult?.Answer);
             bool video = ((string)answerModel?.Description).Contains(Strings.TrainingVideoIdentifier);
-      List<AdaptiveElement> testList = new List<AdaptiveElement>
+      List<AdaptiveElement> responseBodyList = new List<AdaptiveElement>
                 {
                     new AdaptiveTextBlock
                     {
@@ -970,9 +970,7 @@ namespace Microsoft.Teams.Apps.FAQPlusPlus.Cards
  
                 if((answerModel.Description).Contains(Strings.TrainingVideoIdentifier))
             {
-
-            }
-                /*new List<AdaptiveElement>
+        responseBodyList = new List<AdaptiveElement>
                         {
                             new AdaptiveTextBlock
                             {
@@ -1012,10 +1010,11 @@ namespace Microsoft.Teams.Apps.FAQPlusPlus.Cards
                                 Size = AdaptiveTextSize.Small,
                                 Wrap = true,
                             },
-                        }*/;
+                        };
+            }
             AdaptiveCard responseCard = new AdaptiveCard(new AdaptiveSchemaVersion(1, 0))
             {
-                Body = testList
+                Body = responseBodyList
               ,
 
                 Actions = new List<AdaptiveAction>(),
