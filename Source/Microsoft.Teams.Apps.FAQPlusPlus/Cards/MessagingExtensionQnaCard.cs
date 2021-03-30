@@ -968,7 +968,7 @@ namespace Microsoft.Teams.Apps.FAQPlusPlus.Cards
                     },
                 };
  
-                if((string)(answerModel.Description).Contains(Strings.TrainingVideoIdentifier))
+                if((answerModel.Description).Contains(Strings.TrainingVideoIdentifier))
             {
 
             }
