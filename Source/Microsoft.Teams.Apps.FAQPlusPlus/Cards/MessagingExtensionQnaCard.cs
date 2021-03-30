@@ -927,9 +927,50 @@ namespace Microsoft.Teams.Apps.FAQPlusPlus.Cards
         {
             var answerModel = JsonConvert.DeserializeObject<AnswerModel>(queryResult?.Answer);
             bool video = ((string)answerModel?.Description).Contains(Strings.TrainingVideoIdentifier);
+            List<AdaptiveElement> testList = new List<AdaptiveElement>
+                {
+                    new AdaptiveTextBlock
+                    {
+                        Weight = AdaptiveTextWeight.Bolder,
+                        Text = Strings.ResponseHeaderText,
+                        Wrap = true,
+                    },
+                    new AdaptiveTextBlock
+                    {
+                        Size = AdaptiveTextSize.Default,
+                        Wrap = true,
+                        Text = queryResult?.Questions[0],
+                    },
+                    new AdaptiveTextBlock
+                    {
+                        Wrap = true,
+                        Text = answerModel?.Title,
+                        Size = AdaptiveTextSize.Large,
+                        Weight = AdaptiveTextWeight.Bolder,
+                    },
+
+                    new AdaptiveImage
+                    {
+                        Url = !string.IsNullOrEmpty(answerModel?.ImageUrl?.Trim()) ? new Uri(answerModel?.ImageUrl?.Trim()) : default,
+                        Size = AdaptiveImageSize.Auto,
+                        Style = AdaptiveImageStyle.Default,
+                        AltText = answerModel?.Title,
+                    },
+                    new AdaptiveTextBlock
+                    {
+                        Text = answerModel?.Subtitle,
+                        Size = AdaptiveTextSize.Large,
+                    },
+                    new AdaptiveTextBlock
+                    {
+                        Text = answerModel?.Description,
+                        Size = AdaptiveTextSize.Small,
+                        Wrap = true,
+                    },
+                };
             AdaptiveCard responseCard = new AdaptiveCard(new AdaptiveSchemaVersion(1, 0))
             {
-                Body = new List<AdaptiveElement>
+                Body = testList/*new List<AdaptiveElement>
                 {
                     new AdaptiveTextBlock
                     {
@@ -969,7 +1010,9 @@ namespace Microsoft.Teams.Apps.FAQPlusPlus.Cards
                         Size = AdaptiveTextSize.Small,
                         Wrap = true,
                     },
-                },
+                }*/
+              ,
+
                 Actions = new List<AdaptiveAction>(),
             };
          
