@@ -602,7 +602,7 @@ I am your friendly Q&amp;A bot that helps you provide support to people who inte
     <comment>Feedback for App</comment>
   </data>
   <data name="TrainingVideoIdentifier" xml:space="preserve">
-    <value>https://m365x911613.sharepoint.com/</value>
+    <value>https://m365x911613.sharepoint.com</value>
     <comment>To identify if there is a training video in the answers</comment>
   </data>
 </root>
