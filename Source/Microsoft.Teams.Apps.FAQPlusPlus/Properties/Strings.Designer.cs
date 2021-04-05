@@ -1060,7 +1060,7 @@ namespace Microsoft.Teams.Apps.FAQPlusPlus.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to https://m365x911613.sharepoint.com/.
+        ///   Looks up a localized string similar to https://m365x911613.sharepoint.com.
         /// </summary>
         public static string TrainingVideoIdentifier {
             get {
